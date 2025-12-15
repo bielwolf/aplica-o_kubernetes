@@ -38,11 +38,12 @@ spec:
       labels:
         app: pagamentos
     spec:
+      hostname: pagamentos-ms
       containers:
       - name: pagamentos
         image: bielwolf/java-pagamentos-k8s:v3
         ports:
-        - containerPort: 80
+        - containerPort: 40000
         env:
         - name: SERVER_HOST
           valueFrom:
@@ -79,11 +80,12 @@ spec:
       labels:
         app: pedidos
     spec:
+      hostname: pedidos-ms
       containers:
       - name: pedidos
         image: bielwolf/java-pedidos-k8s:v3
         ports:
-        - containerPort: 80
+        - containerPort: 40001
         env:
         - name: SERVER_HOST
           valueFrom:
@@ -107,24 +109,28 @@ spec:
               key: DB_PASSWORD
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: server
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: server
+      app: server 
+  serviceName: "server"
+  replicas: 2
+  minReadySeconds: 10 
   template:
     metadata:
       labels:
-        app: server
+        app: server 
     spec:
+      terminationGracePeriodSeconds: 10
       containers:
       - name: server
         image: bielwolf/java-server-k8s:v3
         ports:
         - containerPort: 8081
+          name: server
         env:
         - name: SERVER_HOST
           valueFrom:
