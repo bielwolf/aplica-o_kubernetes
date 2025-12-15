@@ -7,5 +7,6 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17.0.11_9-jre-focal
 WORKDIR /app
 COPY --from=build /app/target/server-0.0.1-SNAPSHOT.jar .
+EXPOSE 8081
 CMD [ "java", "-jar", "server-0.0.1-SNAPSHOT.jar" ]
 
