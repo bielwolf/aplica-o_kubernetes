@@ -24,5 +24,5 @@ spec:
         - name: SERVER_HOST
           valueFrom:
             configMapKeyRef:
-              name: {{.Values.ConfigMap.name}}
+              name: {{.Values.configMap.name}}
               key: SERVER_HOST

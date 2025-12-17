@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pagamentos
-  labels: 
-    {{- include "alura-foods-app.labels" .| nindent 4}}
+  labels:
+    {{- include "alura-foods-app.labels" . | nindent 4 }}
     app: pagamentos
 spec:
-  replicas: {{.Values.pagamentos.replicaCount}}
+  replicas: {{ .Values.pagamentos.replicaCount }}
   selector:
     matchLabels:
       app: pagamentos
@@ -17,28 +17,25 @@ spec:
     spec:
       hostname: pagamentos-ms
       containers:
-      - name: pagamentos
-        image: {{.Values.pagamentos.image}}
-        ports:
-        - containerPort: {{.Values.pagamentos.image}}
-        env:
-        - name: SERVER_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: {{.Values.configMap.name}}
-              key: SERVER_HOST
-        - name: DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: {{.Values.configMap.name}}
-              key: DB_HOST
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: senhas
-              key: DB_USER
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: senhas
-              key: DB_PASSWORD
+        - name: pagamentos
+          image: {{ .Values.pagamentos.image }}
+          ports:
+            - containerPort: {{ .Values.pagamentos.port }}
+          env:
+            - name: SERVER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.configMap.name }}
+                  key: SERVER_HOST
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.configMap.name }}
+                  key: DB_HOST
+            - name: DB_USER
+              value: root
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: alura-foods-app-mysql
+                  key: mysql-root-password

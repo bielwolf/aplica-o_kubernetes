@@ -1,8 +1,9 @@
-ConfigMap:
+configMap:
   name: dados
   data:
     SERVER_HOST: "http://server-0.server:8081/eureka,http://server-1.server:8081/eureka"
-    DB_HOST: "mysql"
+    DB_HOST: "alura-foods-app-mysql"
+    DB_USER: "root"
 
 gateway:
   replicaCount: 2
@@ -19,15 +20,15 @@ pedidos:
   image: bielwolf/java-pedidos-k8s:v3
   port: 40001
 
-pedidos:
+server:
   replicaCount: 2
   image: bielwolf/java-server-k8s:v3
   port: 8081
 
 services:
-  - name: mysql
-    label: mysql
-    port: 3306
+  # - name: mysql
+  #   label: mysql
+  #   port: 3306
   - name: server
     label: server
     port: 8081
@@ -37,3 +38,6 @@ services:
   - name: pedidos-ms
     label: pedidos
     port: 40001
+
+secret: 
+  name: "alura-foods-app-mysql"
