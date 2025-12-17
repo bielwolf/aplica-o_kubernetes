@@ -3,3 +3,18 @@ ConfigMap:
   data:
     SERVER_HOST: "http://server-0.server:8081/eureka,http://server-1.server:8081/eureka"
     DB_HOST: "mysql"
+
+gateway:
+  replicaCount: 2
+  image: bielwolf/java-gateway-k8s:v3
+  port: 80
+
+pagamentos:
+  replicaCount: 2
+  image: bielwolf/java-pagamentos-k8s:v3
+  port: 40000
+
+pedidos:
+  replicaCount: 2
+  image: bielwolf/java-pedidos-k8s:v3
+  port: 40001

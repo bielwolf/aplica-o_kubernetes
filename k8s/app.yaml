@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gateway
+  labels:
+    app: gateway
 spec:
   replicas: 2
   selector:
@@ -28,6 +30,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pagamentos
+  labels:
+    app: pagamentos
 spec:
   replicas: 2
   selector:
@@ -70,6 +74,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pedidos
+  labels:
+    app: pedidos
 spec:
   replicas: 2
   selector:

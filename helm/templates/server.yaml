@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: server
+spec:
+  selector:
+    matchLabels:
+      app: server 
+  serviceName: "server"
+  replicas: 2
+  minReadySeconds: 10 
+  template:
+    metadata:
+      labels:
+        app: server 
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: server
+        image: bielwolf/java-server-k8s:v3
+        ports:
+        - containerPort: 8081
+          name: server
+        env:
+        - name: SERVER_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: dados
+              key: SERVER_HOST
