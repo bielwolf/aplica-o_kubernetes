@@ -18,3 +18,22 @@ pedidos:
   replicaCount: 2
   image: bielwolf/java-pedidos-k8s:v3
   port: 40001
+
+pedidos:
+  replicaCount: 2
+  image: bielwolf/java-server-k8s:v3
+  port: 8081
+
+services:
+  - name: mysql
+    label: mysql
+    port: 3306
+  - name: server
+    label: server
+    port: 8081
+  - name: pagamentos-ms
+    label: pagamentos
+    port: 40000
+  - name: pedidos-ms
+    label: pedidos
+    port: 40001

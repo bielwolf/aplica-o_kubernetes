@@ -118,6 +118,8 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: server
+  labels:
+    app: serve
 spec:
   selector:
     matchLabels:

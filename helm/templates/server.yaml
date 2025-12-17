@@ -2,12 +2,15 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: server
+  labels:
+    {{- include "alura-foods-app.labels" .| nindent 4}}
+    app: server
 spec:
   selector:
     matchLabels:
       app: server 
   serviceName: "server"
-  replicas: 2
+  replicas: {{.Values.server.replicaCount}}
   minReadySeconds: 10 
   template:
     metadata:
@@ -17,13 +20,13 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: server
-        image: bielwolf/java-server-k8s:v3
+        image: {{.Values.server.image}}
         ports:
-        - containerPort: 8081
+        - containerPort: {{.Values.server.port}}
           name: server
         env:
         - name: SERVER_HOST
           valueFrom:
             configMapKeyRef:
-              name: dados
+              name: {{.Values.configMap.name}}
               key: SERVER_HOST
